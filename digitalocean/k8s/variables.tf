@@ -18,7 +18,7 @@ variable "node_size" {
 
 variable "db_size" {
   type    = string
-  default = "db-s-1vcpu-1gb"
+  default = "m-2vcpu-16gb"
 }
 
 variable "image_type" {

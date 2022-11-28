@@ -59,7 +59,37 @@ resource "aws_dynamodb_table" "terraform_lock" {
     TargetApp = var.target_app
   }
 }
+resource "aws_dynamodb_table" "all_in_one_do_lock" {
+  name         = "all_in_one_do_lock"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+  lifecycle {
+    prevent_destroy = true
+  }
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+  tags = {
+    TargetApp = var.target_app
+  }
+}
 
+resource "aws_dynamodb_table" "k8s_do_lock" {
+  name         = "k8s_do_lock"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+  lifecycle {
+    prevent_destroy = true
+  }
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+  tags = {
+    TargetApp = var.target_app
+  }
+}
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket                  = aws_s3_bucket.terraform_remote_state.id
   block_public_acls       = true

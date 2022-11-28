@@ -1,10 +1,11 @@
 terraform {
-  cloud {
-    organization = "dmitriv-konnov-solutions"
-
-    workspaces {
-      name = "exam-infra-dev"
-    }
+  backend "s3" {
+    bucket         = "remote-state-dmitrii-konnov-solutions-exam"
+    key            = "exam-mcsvcs-k8s-do/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "k8s_do_lock"
+    encrypt        = true
+    profile        = "TF-REMOTE-STATE"
   }
   required_providers {
     digitalocean = {
